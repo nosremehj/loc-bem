@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   hide: boolean = true;
   errorMessage = '';
   loginForm: FormGroup;
@@ -31,6 +31,20 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+  }
+  ngOnInit(): void {
+    this.getUsers();
+  }
+
+  getUsers() {
+    this.loginService.getUser().subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (ex) => {
+        console.error(ex);
+      }
+    );
   }
 
   login() {
