@@ -1,0 +1,36 @@
+.content {
+    display: flex;
+    background-color: #d30808;
+    height: calc(100vh - 104px);
+    .sub-content {
+      margin-left: 84px;
+      h1 {
+        margin: 0px;
+        background-color: #d30808;
+        padding-top: 153px;
+        color: #c0c0c0;
+        font-weight: 500;
+        font-size: 50px;
+        line-height: 70px;
+      }
+      p {
+        margin: 10px 0px 70px 0px;
+      }
+      a {
+        text-decoration: none;
+        color: #ffffff;
+        background-color: #141414;
+        border: 1px solid #141414;
+        padding: 10px;
+        font-weight: 500;
+        line-height: 24px;
+        font-size: 20px;
+      }
+    }
+    img {
+      margin-top: 202px;
+      width: 746px;
+      height: 220px;
+    }
+  }
+  

@@ -1,0 +1,29 @@
+.content {
+  margin: 0;
+  padding: 0;
+  .nav-bar {
+    height: 104px;
+    overflow: visible;
+    background-color: black;
+    img {
+      margin: 20px 0px 0px 90px;
+    }
+    ul {
+      display: inline;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      li {
+        float: right;
+        margin: 40px 60px 0px 0px;
+        a {
+          color: #ffffff;
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 21.79px;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}

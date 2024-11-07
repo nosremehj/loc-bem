@@ -1,0 +1,57 @@
+<app-navbar></app-navbar>
+<div class="content">
+  <div class="box-login">
+    <div class="login">
+      <h1>Login</h1>
+      <p>Não possui uma conta? <a href="">Crie uma nova conta.</a></p>
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <label>E-mail</label>
+        <input
+          formControlName="email"
+          placeholder="E-mail"
+          type="email"
+          name=""
+          id=""
+        />
+        <mat-error
+          *ngIf="
+            loginForm.get('email')?.hasError('required') &&
+            loginForm.get('password')?.touched
+          "
+        >
+          E-mail é obrigatório
+        </mat-error>
+        <mat-error
+          *ngIf="
+            loginForm.get('email')?.hasError('email') &&
+            loginForm.get('password')?.touched
+          "
+        >
+          Formato de E-mail inválido
+        </mat-error>
+        <label>Senha</label>
+        <input
+          formControlName="password"
+          placeholder="Senha"
+          type="password"
+          name=""
+          id=""
+        />
+        <mat-error
+          *ngIf="
+            loginForm.get('password')?.hasError('required') &&
+            loginForm.get('password')?.touched
+          "
+        >
+          A senha é obrigatória
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+          Senha deve ter pelo menos 6 caracteres
+        </mat-error>
+
+        <a href="/recovery">Esqueceu a senha?</a>
+        <button [disabled]="!validFields()" type="submit">Entrar</button>
+      </form>
+    </div>
+  </div>
+</div>
