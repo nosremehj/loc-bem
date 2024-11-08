@@ -23,7 +23,7 @@ export class LoginService {
   login(creds: Credentials): Observable<boolean> {
     return this.http
       .post<{ token: string }>(
-        `${API_CONFIG.baseUrl}/oauth/token?grant_type=password&username=${creds.email}&password=${creds.password}`,
+        `${API_CONFIG.baseUrl}/oauth/token?grant_type=password&username=${creds.username}&password=${creds.password}`,
         { creds }
       )
       .pipe(
