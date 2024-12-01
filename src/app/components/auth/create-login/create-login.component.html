@@ -2,12 +2,20 @@
 <div class="content">
   <div class="box-login">
     <div class="login">
-      <h1>Login</h1>
-      <p>Não possui uma conta? <a href="/create">Crie uma nova conta.</a></p>
-      <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <h1>Criar usuário</h1>
+      <p>Já possui uma conta? <a href="/login">Faça o login!</a></p>
+      <form [formGroup]="loginForm" (ngSubmit)="createUser()">
+        <label>Nome</label>
+        <input
+          type="text"
+          required
+          formControlName="name"
+          placeholder="Ex. Maria "
+        />
+
         <label>E-mail</label>
         <input
-          formControlName="username"
+          formControlName="email"
           placeholder="E-mail"
           type="email"
           name=""
@@ -49,8 +57,25 @@
           Senha deve ter pelo menos 6 caracteres
         </mat-error>
 
+        <label>CPF</label>
+        <input
+          type="text"
+          placeholder="Ex. 000.000.000-00"
+          required
+          formControlName="personRegistration"
+        />
+
+        <label>CEP</label>
+        <input type="text" required formControlName="cep" />
+
+        <label>Longitude</label>
+        <input type="text" formControlName="longitude" />
+
+        <label>Latitude</label>
+        <input type="text" formControlName="latitude" />
+
         <a href="/recovery">Esqueceu a senha?</a>
-        <button [disabled]="!validFields()" type="submit">Entrar</button>
+        <button type="submit">Criar</button>
       </form>
     </div>
   </div>

@@ -7,55 +7,40 @@ import {
   NgForm,
   Validators,
 } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { Credentials } from './models/Credentials';
-import { LoginService } from './services/login.service';
+import { LoginService } from '../login/services/login.service';
 import { Router } from '@angular/router';
-
+import { UserService } from './services/user.service';
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-create-login',
+  templateUrl: './create-login.component.html',
+  styleUrls: ['./create-login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class CreateLoginComponent implements OnInit {
   hide: boolean = true;
   errorMessage = '';
   loginForm: FormGroup;
 
   constructor(
-    private loginService: LoginService,
+    private userService: UserService,
     private router: Router,
     private fb: FormBuilder
   ) {
     this.loginForm = this.fb.group({
-      nome: ['', [Validators.required, Validators.minLength(4)]],
+      name: ['', [Validators.required, Validators.minLength(4)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      cpf: ['', [Validators.required, Validators.minLength(11)]],
+      personRegistration: ['', [Validators.required, Validators.minLength(11)]],
       cep: ['', [Validators.required, Validators.minLength(8)]],
-      longitude: ['', [Validators.minLength(8)]],
-      latitude: ['', [Validators.minLength(8)]],
+      longitude: ['', [Validators.minLength(2)]],
+      latitude: ['', [Validators.minLength(2)]],
     });
   }
-  ngOnInit(): void {
-    this.getUsers();
-  }
+  ngOnInit(): void {}
 
-  getUsers() {
-    this.loginService.getUser().subscribe(
-      (res) => {
-        console.log(res);
-      },
-      (ex) => {
-        console.error(ex);
-      }
-    );
-  }
-
-  login() {
+  createUser() {
     if (this.loginForm.valid) {
       console.log(this.loginForm.value);
-      this.loginService.login(this.loginForm.value).subscribe(
+      this.userService.registerPerson(this.loginForm.value).subscribe(
         (success) => {
           if (success) {
             this.router.navigate(['/home']); // Redireciona para a página principal

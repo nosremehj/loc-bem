@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,7 +9,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { RecoveryPasswordComponent } from './components/auth/recovery-password/recovery-password.component';
 import { AccountComponent } from './components/account/account.component';
@@ -18,6 +19,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CreateOfferComponent } from './components/offers/create-offer/create-offer.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CreateLoginComponent } from './components/auth/create-login/create-login.component';
+import { ChatBotComponent } from './components/chat-bot/chat-bot/chat-bot.component';
+import { MatDialogModule } from '@angular/material/dialog';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,8 +33,11 @@ import { HttpClientModule } from '@angular/common/http';
     AccountComponent,
     OffersComponent,
     CreateOfferComponent,
+    CreateLoginComponent,
+    ChatBotComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -40,6 +48,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatSelectModule,
     MatFormFieldModule,
     HttpClientModule,
+    MatDialogModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,0 +1,26 @@
+<div *ngIf="currentQuestion">
+  <h2>{{ currentQuestion.question }}</h2>
+
+  <!-- Se a pergunta for do tipo "numeric", exiba um campo de input -->
+  <div *ngIf="currentQuestion.type === 'numeric'">
+    <mat-form-field>
+      <input matInput type="number" [(ngModel)]="currentAnswer" />
+    </mat-form-field>
+  </div>
+
+  <!-- Se a pergunta for do tipo "enum", use um mat-select para mostrar as opções -->
+  <div *ngIf="currentQuestion.type === 'enum'">
+    <mat-form-field>
+      <mat-select [(ngModel)]="currentAnswer">
+        <mat-option
+          *ngFor="let option of currentQuestion.options"
+          [value]="option"
+        >
+          {{ option }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <button mat-button (click)="onAnswer(currentAnswer)">Próxima</button>
+</div>

@@ -4,42 +4,56 @@
     <p class="config">Configure o seu cadastro.</p>
     <div class="first-box">
       <h2>Dados da conta</h2>
-      <form action="">
+      <form [formGroup]="veiculoForm" (ngSubmit)="addVeiculo()" action="">
         <label for="">Modelo</label>
-        <input class="disabled-input" type="text" name="" id="" />
-        <label for=""
-          >Apelido
-          <span class="config"
-            >(Obrigatório) Como aparecerá nos seus anúncios.</span
-          ></label
-        >
-        <input type="text" name="" id="" />
-        <label for="">Ano de Fabricação</label>
         <input
+          formControlName="modelo"
           class="disabled-input"
-          mask="000.000.000-0"
           type="text"
           name=""
           id=""
         />
+        <label for="">Ano de Fabricação</label>
+        <input class="disabled-input" type="text" name="" id="" />
         <label for="">Ano do Modelo</label>
-        <section>
-          <input type="radio" /><span>Feminino</span>
-          <input type="radio" /><span>Masculino</span>
-          <input type="radio" /><span>Não informar</span>
-        </section>
-
+        <input type="text" />
         <label for="">Preço</label>
+        <input type="text" />
         <label for="">Descrição</label>
+        <input type="text" />
         <label for="">Quilometragem</label>
+        <input type="text" />
         <label for="">Condição</label>
-        <label for="">Latitude</label>
-        <label for="">Longitude</label>
+        <input type="text" />
+        <label for="">Coordenadas</label>
+        <input type="text" />
         <label for="">Imagens</label>
+        <input
+          type="file"
+          id="image-upload"
+          accept="image/*"
+          multiple
+          (change)="onFilesSelected($event)"
+        />
+        <!-- Visualizar as imagens selecionadas -->
+        <div *ngIf="previewUrls.length > 0">
+          <p>Pré-visualizações:</p>
+          <div *ngFor="let preview of previewUrls">
+            <img
+              [src]="preview"
+              alt="Pré-visualização da imagem"
+              style="max-width: 200px; max-height: 200px; margin: 5px"
+            />
+          </div>
+        </div>
         <label for="">Tipo do Veiculo</label>
+        <input type="text" />
         <label for="">Combustivel</label>
+        <input type="text" />
         <label for="">Estado do Veiculo</label>
+        <input type="text" />
         <label for="">Caracteristica</label>
+        <input type="text" />
 
         <button>Salvar alteração</button>
       </form>
