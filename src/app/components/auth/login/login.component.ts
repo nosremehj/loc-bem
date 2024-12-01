@@ -43,9 +43,7 @@ export class LoginComponent implements OnInit {
 
   getUsers() {
     this.loginService.getUser().subscribe(
-      (res) => {
-        console.log(res);
-      },
+      (res) => {},
       (ex) => {
         console.error(ex);
       }
@@ -54,7 +52,6 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
       this.loginService.login(this.loginForm.value).subscribe(
         (success) => {
           if (success) {

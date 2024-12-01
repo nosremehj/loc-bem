@@ -1,6 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
-body{
-    margin: 0px;
+@import "ngx-toastr/toastr";
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-family: "Roboto", sans-serif;
+  line-height: 1.5;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Suavidade nas transições */
+* {
+  transition: all 0.3s ease;
+}

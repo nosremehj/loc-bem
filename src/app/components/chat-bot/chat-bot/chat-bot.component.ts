@@ -14,20 +14,13 @@ import { ChatbotService } from '../../offers/chatbot/chatbot.service';
   styleUrls: ['./chat-bot.component.scss'],
 })
 export class ChatBotComponent {
-  estadoVeiculoOptions = Object.values(EstadoVeiculo);
-  tipoVeiculoOptions = Object.values(TipoVeiculo);
-  combustivelOptions = Object.values(Combustivel);
-  caracteristicaVeiculoOptions = Object.values(CaracteristicaVeiculo);
-
-  // currentQuestionIndex = 0;
-  // currentQuestion: any;
   currentAnswer: any;
-  // preferences: any = {};
-
   preferences: any = {}; // Inicializamos um objeto vazio para armazenar as respostas
   currentQuestionIndex: number = 0; // Índice da pergunta atual
   currentQuestion: any; // Pergunta atual
   coordenadasUsuario = { latitude: -10.704446, longitude: -48.410793 }; // Coordenadas fixas para exemplo
+  numericValue: number | null = null;
+  selectedOptions: string[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<ChatBotComponent>,
@@ -37,57 +30,6 @@ export class ChatBotComponent {
     this.askNextQuestion();
   }
 
-  // questions = [
-  //   { question: 'Qual a importância do preço? (1-10)', type: 'numeric' },
-  //   {
-  //     question: 'Qual o estado do veículo?',
-  //     type: 'enum',
-  //     enumType: EstadoVeiculo,
-  //     options: Object.values(EstadoVeiculo),
-  //   },
-  //   {
-  //     question: 'Qual a importância do estado do veículo? (1-10)',
-  //     type: 'numeric',
-  //   },
-  //   {
-  //     question: 'Qual a importância da quilometragem? (1-10)',
-  //     type: 'numeric',
-  //   },
-  //   {
-  //     question: 'Quais os tipos de veículos preferidos?',
-  //     type: 'enum',
-  //     enumType: TipoVeiculo,
-  //     options: Object.values(TipoVeiculo),
-  //   },
-  //   {
-  //     question: 'Qual a importância do tipo de veículo? (1-10)',
-  //     type: 'numeric',
-  //   },
-  //   {
-  //     question: 'Quais os tipos de combustível preferidos?',
-  //     type: 'enum',
-  //     enumType: Combustivel,
-  //     options: Object.values(Combustivel),
-  //   },
-  //   {
-  //     question: 'Qual a importância do tipo de combustível? (1-10)',
-  //     type: 'numeric',
-  //   },
-  //   {
-  //     question: 'Quais características adicionais preferidas?',
-  //     type: 'enum',
-  //     enumType: CaracteristicaVeiculo,
-  //     options: Object.values(CaracteristicaVeiculo),
-  //   },
-  //   {
-  //     question: 'Qual a importância das características adicionais? (1-10)',
-  //     type: 'numeric',
-  //   },
-  //   {
-  //     question: 'Qual a distância máxima para buscar o veículo? (em km)',
-  //     type: 'numeric',
-  //   },
-  // ];
   questions = [
     {
       question: 'Qual a importância do preço? (1-10)',
@@ -155,52 +97,95 @@ export class ChatBotComponent {
   ];
 
   // askNextQuestion() {
-  //   // Se as perguntas terminaram, exiba o resultado
+  //   // Verifica se ainda há perguntas a serem feitas
   //   if (this.currentQuestionIndex < this.questions.length) {
   //     this.currentQuestion = this.questions[this.currentQuestionIndex];
   //   } else {
-  //     console.log(this.questions);
-  //     console.log(this.preferences); // Dados finais
+  //     // Finaliza e exibe os dados finais
+  //     const data = {
+  //       ...this.preferences,
+  //       coordenadasUsuario: this.coordenadasUsuario,
+  //     };
+  //     this.dialogRef.close(data);
   //   }
   // }
 
-  // onAnswer(answer: any) {
-  //   const current = this.currentQuestion;
-
-  //   if (current.type === 'numeric') {
-  //     this.preferences[current.question] = parseInt(answer, 10);
-  //   } else if (current.type === 'enum') {
-  //     this.preferences[current.question] = [answer]; // Pode ser um único ou múltiplos valores
-  //   }
-
-  //   this.currentQuestionIndex++;
-  //   this.askNextQuestion();
-  // }
   askNextQuestion() {
-    // Verifica se ainda há perguntas a serem feitas
     if (this.currentQuestionIndex < this.questions.length) {
       this.currentQuestion = this.questions[this.currentQuestionIndex];
+      if (this.currentQuestion.type === 'enum') {
+        this.selectedOptions = this.preferences[this.currentQuestion.key] || [];
+      }
     } else {
-      // Finaliza e exibe os dados finais
       const data = {
         ...this.preferences,
         coordenadasUsuario: this.coordenadasUsuario,
       };
       this.dialogRef.close(data);
-      // console.log('Dados finais:', data);
     }
   }
 
-  onAnswer(answer: any) {
+  toggleSelection(option: string) {
+    const index = this.selectedOptions.indexOf(option);
+    if (index === -1) {
+      this.selectedOptions.push(option); // Adiciona à seleção
+    } else {
+      this.selectedOptions.splice(index, 1); // Remove da seleção
+    }
+  }
+
+  capitalizeWords(text: string): string {
+    return text
+      .toLowerCase()
+      .replace(/_/g, ' ') // Substitui underscores por espaços
+      .split(' ')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
+
+  // onAnswer(answer: any) {
+  //   const current = this.currentQuestion;
+
+  //   if (current.type === 'numeric') {
+  //     this.preferences[current.key] = parseInt(answer, 10);
+  //   } else if (current.type === 'enum') {
+  //     this.preferences[current.key] = Array.isArray(answer) ? answer : [answer];
+  //   }
+
+  //   this.currentQuestionIndex++;
+  //   this.askNextQuestion();
+  // }
+
+  onAnswer() {
     const current = this.currentQuestion;
 
     if (current.type === 'numeric') {
-      this.preferences[current.key] = parseInt(answer, 10);
+      this.preferences[current.key] = this.numericValue;
     } else if (current.type === 'enum') {
-      this.preferences[current.key] = Array.isArray(answer) ? answer : [answer];
+      this.preferences[current.key] = this.selectedOptions.map((opt) =>
+        opt.toUpperCase()
+      ); // Envia em caixa alta
     }
 
     this.currentQuestionIndex++;
+    this.numericValue = null; // Limpa o valor numérico para a próxima pergunta
     this.askNextQuestion();
+  }
+
+  // finishQuestionnaire() {
+  //   this.dialogRef.close(this.preferences); // Envia os dados para o componente pai
+  // }
+
+  // closeDialog() {
+  //   this.dialogRef.close(null); // Fecha sem salvar
+  // }
+
+  closeDialog() {
+    // Caso o usuário queira cancelar, retorna null
+    this.dialogRef.close(null);
+  }
+
+  isLastQuestion(): boolean {
+    return this.currentQuestionIndex === this.questions.length - 1;
   }
 }

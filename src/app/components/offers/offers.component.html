@@ -5,8 +5,11 @@
   </div>
   <div class="card">
     <section class="search">
-      <input placeholder="Pesquise" type="text" />
-      <button>Ir</button>
+      <input [(ngModel)]="term" placeholder="Pesquise" type="text" />
+      <button (click)="searchTerm()">Ir</button>
+      <button class="limpar" *ngIf="filtroAtivo" (click)="limparFiltro()">
+        Limpar Filtro
+      </button>
     </section>
     <div class="mt-cards">
       <mat-card class="cards" *ngFor="let data of ofertas">
@@ -14,23 +17,23 @@
           *ngIf="!data.linkImagens[0]; else showImagem"
           src="../../../assets/img/sem_foto.png "
           alt="sem imagem"
+          style="border-radius: 80px"
         />
         <ng-template #showImagem>
           <img mat-card-image src="{{ data.linkImagens[0] }}" />
         </ng-template>
         <mat-card-content>
+          <h3>
+            {{ data.modelo }}, {{ data.anoModelo }} |
+            <span>R$ {{ data.preco }}</span>
+          </h3>
           <section>
-            <h3>
-              {{ data.modelo }}, {{ data.anoModelo }} |
-              <span>R$ {{ data.preco }}</span>
-            </h3>
             <p>{{ data.quilometragem }} mil km, {{ data.descricao }}</p>
+            <p class="km">
+              <span class="material-symbols-outlined"> location_on </span>
+              {{ parteInteiraDistancia(data.distanciaEmKM) }} KM
+            </p>
           </section>
-
-          <p class="km">
-            <span class="material-symbols-outlined"> location_on </span>
-            {{ parteInteiraDistancia(data.distanciaEmKM) }} KM
-          </p>
         </mat-card-content>
       </mat-card>
     </div>

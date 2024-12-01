@@ -15,10 +15,16 @@ export class OffersService {
     return this.http.post(this.apiUrl1, offerGet);
   }
 
-  pegarTodasAsOfertas(offerGet: any): Observable<any> {
-    return this.http.get(
-      `${API_CONFIG.baseUrl}/oferta/?latitude=${offerGet.latitude}&longitude=${offerGet.longitude}`
-    );
+  pegarTodasAsOfertas(offerGet: any, searchTerm?: string): Observable<any> {
+    if (searchTerm) {
+      return this.http.get(
+        `${API_CONFIG.baseUrl}/oferta/?latitude=${offerGet.latitude}&longitude=${offerGet.longitude}&searchTerm=${searchTerm}`
+      );
+    } else {
+      return this.http.get(
+        `${API_CONFIG.baseUrl}/oferta/?latitude=${offerGet.latitude}&longitude=${offerGet.longitude}`
+      );
+    }
   }
 
   createOffer(offerData: {
