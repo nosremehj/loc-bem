@@ -6,7 +6,7 @@
   <div class="card">
     <section class="search">
       <input [(ngModel)]="term" placeholder="Pesquise" type="text" />
-      <button (click)="searchTerm()">Ir</button>
+      <button [disabled]="!term" (click)="searchTerm()">Ir</button>
       <button class="limpar" *ngIf="filtroAtivo" (click)="limparFiltro()">
         Limpar Filtro
       </button>
