@@ -24,24 +24,24 @@
       [max]="200"
     />
   </div>
-
-  <!-- Botões de navegação -->
-  <div class="navigation-buttons">
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="onAnswer()"
-      [disabled]="
-        (currentQuestion.type === 'numeric' &&
-          (numericValue === null || numericValue < 1 || numericValue > 200)) ||
-        (currentQuestion.type === 'enum' && selectedOptions.length === 0)
-      "
-    >
-      {{
-        currentQuestionIndex === questions.length - 1 ? "Finalizar" : "Próximo"
-      }}
-    </button>
-  </div>
 </div>
+<!-- Botões de navegação -->
+<div class="navigation-buttons">
+  <button class="cancel" (click)="closeDialog()">Cancelar</button>
 
-<button class="cancel" (click)="closeDialog()">Cancelar</button>
+  <button
+    class="send"
+    mat-raised-button
+    (click)="onAnswer()"
+    [disabled]="
+      (currentQuestion.type === 'numeric' &&
+        (numericValue === null || numericValue < 1 || numericValue > 200)) ||
+      (currentQuestion.type === 'enum' && selectedOptions.length === 0)
+    "
+  >
+    {{ currentQuestionIndex === questions.length - 1 ? "Finalizar" : "" }}
+    <mat-icon *ngIf="currentQuestionIndex !== questions.length - 1"
+      >send</mat-icon
+    >
+  </button>
+</div>

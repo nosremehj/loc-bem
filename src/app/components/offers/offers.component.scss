@@ -10,7 +10,7 @@
     height: auto;
   }
   .chat {
-    width: 25%;
+    width: 20%;
     margin-top: 40px;
     p {
       margin-left: 24px;
@@ -73,65 +73,230 @@
     .mt-cards {
       display: flex;
       flex-wrap: wrap;
-      @media (min-width: 1280px) {
-        width: 80%;
+      gap: 10px;
+      padding-left: 25px;
+
+      // .cards {
+      //   @media (min-width: 1920px) {
+      //     max-width: 17%;
+      //   }
+      //   max-width: 28%;
+      //   border: 3px solid #cccccc;
+      //   border-radius: 30px;
+      //   margin: 0px auto 30px auto;
+      //   img {
+      //     @media (min-width: 1280px) {
+      //       height: 80%;
+      //     }
+      //   }
+      //   mat-card-content {
+      //     padding-bottom: 0px;
+      //     h3 {
+      //       width: 100%;
+      //       font-weight: 700;
+      //       font-size: 12px;
+      //       line-height: 14.52px;
+      //       margin: 8px 0px 0px 0px;
+      //       color: #000000;
+      //     }
+      //     section {
+      //       display: flex;
+      //       p {
+      //         font-size: 10px;
+      //         font-weight: 700;
+      //         line-height: 12px;
+      //         color: #686262;
+      //       }
+      //     }
+      //     p {
+      //       margin: 8px 0px;
+      //     }
+      //     .km {
+      //       width: 40%;
+      //       font-size: 10px;
+      //       color: #686262;
+      //       font-weight: 700;
+      //       display: flex;
+      //       span {
+      //         color: #d30808;
+      //         font-size: 16px;
+      //       }
+      //     }
+      //   }
+      // }
+
+      mat-card:hover {
+        cursor: pointer;
+        box-shadow: 0 2px 11px 0px #00000052;
       }
-      @media (min-width: 1400px) {
-        width: 80%;
-      }
-      @media (min-width: 1600px) {
-        width: 80%;
-      }
-      @media (min-width: 1920px) {
-        width: 100%;
-      }
-      .cards {
-        @media (min-width: 1920px) {
-          max-width: 17%;
-        }
-        max-width: 28%;
+      mat-card {
+        min-height: 236px;
+        border-radius: 8px;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.12);
         border: 3px solid #cccccc;
-        border-radius: 30px;
-        margin: 0px auto 30px auto;
-        img {
-          @media (min-width: 1280px) {
-            height: 80%;
-          }
+        @media (max-width: 1699px) {
+          width: 15.9%;
         }
-        mat-card-content {
-          padding-bottom: 0px;
-          h3 {
+        @media (max-width: 1440px) {
+          width: 15.8%;
+        }
+        @media (max-width: 1366px) {
+          width: 15.8%;
+        }
+        @media (max-width: 1260px) {
+          width: 15.6%;
+        }
+        @media (max-width: 1000px) {
+          width: calc(25% - 9px);
+        }
+        width: 15.9%;
+
+        .more {
+          opacity: 0;
+          margin: 0;
+          padding: 0;
+          border: 0;
+          background: white;
+          position: absolute;
+          z-index: 1;
+          width: 25px;
+          right: 4px;
+          box-shadow: 0px 0px 3px 0px #00000063;
+          height: 25px;
+          border-radius: 4px;
+          top: 6px;
+          color: #246ca7;
+        }
+
+        .more:hover {
+          cursor: pointer;
+        }
+
+        .showMore {
+          opacity: 1 !important;
+        }
+        .content-wrapper {
+          width: 100%;
+          img {
+            height: 157px;
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
             width: 100%;
-            font-weight: 700;
-            font-size: 12px;
-            line-height: 14.52px;
-            margin: 8px 0px 0px 0px;
-            color: #000000;
           }
-          section {
-            display: flex;
-            p {
-              font-size: 10px;
-              font-weight: 700;
-              line-height: 12px;
-              color: #686262;
+          mat-card-content {
+            padding: 8px 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            div {
+              display: flex;
+              justify-content: space-between;
+              p {
+                color: #686262;
+                border-radius: 5px;
+                padding: 0px 5px;
+                font-size: 10px;
+                font-weight: 700;
+              }
+              .semdados {
+                color: black;
+              }
             }
-          }
-          p {
-            margin: 8px 0px;
-          }
-          .km {
-            width: 40%;
-            font-size: 10px;
-            color: #686262;
-            font-weight: 700;
-            display: flex;
-            span {
-              color: #d30808;
-              font-size: 16px;
+            a {
+              text-decoration: none;
+              font-size: 14px;
+              font-weight: 500;
+              color: #000000;
+              line-height: 18px;
+              height: 37px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+            }
+            p {
+              color: gray;
+              font-size: 10px;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              overflow: hidden;
             }
           }
         }
+      }
+
+      .btn-container {
+        display: flex;
+        flex-direction: column;
+        width: 190px;
+        height: fit-content;
+        button {
+          font-family: "Roboto";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          color: #8d9496;
+          background-color: white;
+          border: none;
+          height: 48px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          mat-icon {
+            margin-right: 10px;
+          }
+        }
+        button:hover {
+          cursor: pointer;
+          color: white;
+          background-color: blue;
+        }
+      }
+
+      ::ng-deep .input-order .mat-mdc-text-field-wrapper {
+        background: #f4f4f5;
+      }
+
+      ::ng-deep mat-select .mat-mdc-select-value {
+        color: blue;
+      }
+
+      ::ng-deep mat-form-field .mat-mdc-form-field-flex {
+        height: 38px;
+        align-items: center;
+      }
+
+      ::ng-deep .image-menu .mat-mdc-menu-content {
+        padding: 0;
+      }
+      ::ng-deep .image-menu .mat-mdc-menu-item:hover {
+        background-color: #246ca7 !important;
+        color: white;
+      }
+
+      ::ng-deep .mdc-tooltip--multiline .mdc-tooltip__surface {
+        background-color: #194c75 !important;
+      }
+
+      ::ng-deep .mdc-tooltip--singleline .mdc-tooltip__surface {
+        background-color: #194c75 !important;
+      }
+
+      ::ng-deep .mdc-tooltip__surface {
+        max-width: 380px !important;
+        background-color: transparent !important;
+      }
+
+      ::ng-deep .tooltipOkto {
+        background-color: #194c75 !important;
+        opacity: 1;
+        color: white;
+        margin: 0 8px;
+        padding: 5px 6px;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        border-radius: 6px;
+        overflow: visible !important;
       }
     }
 

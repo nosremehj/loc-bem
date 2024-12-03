@@ -9,11 +9,37 @@
     margin-top: 20px;
   }
 
-  button[mat-raised-button] {
-    padding: 10px 20px;
-    border-radius: 8px;
+  // button[mat-raised-button] {
+  //   padding: 10px 20px;
+  //   border-radius: 8px;
+  //   font-size: 1rem;
+  //   border: 1px solid #ccc;
+  // }
+
+  .numeric-container input {
+    width: 100%;
+    padding: 10px;
     font-size: 1rem;
-    border: 1px solid #ccc;
+    margin-top: 20px;
+  }
+}
+.navigation-buttons {
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 15px 10px 10px;
+
+  .cancel {
+    background-color: #ffffff;
+    border: 1px solid #d30808;
+    color: #d30808;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+  .cancel:hover {
+    cursor: pointer;
+    background-color: #d30808;
+    color: #ffffff;
   }
 
   button.selected {
@@ -22,28 +48,10 @@
     border: 1px solid #3f51b5;
   }
 
-  .numeric-container input {
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    margin-top: 20px;
+  .send {
+    border-radius: 20px;
+    border: 0px;
+    background: #00c500;
+    color: white;
   }
-
-  .navigation-buttons {
-    margin-top: 20px;
-    text-align: center;
-  }
-}
-.cancel {
-  background-color: #ffffff;
-  border: 1px solid #d30808;
-  color: #d30808;
-  margin: 10px;
-  padding: 10px 20px;
-  border-radius: 5px;
-}
-.cancel:hover {
-  cursor: pointer;
-  background-color: #d30808;
-  color: #ffffff;
 }

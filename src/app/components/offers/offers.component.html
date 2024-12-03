@@ -12,7 +12,7 @@
       </button>
     </section>
     <div class="mt-cards">
-      <mat-card class="cards" *ngFor="let data of ofertas">
+      <!-- <mat-card class="cards" *ngFor="let data of ofertas">
         <img
           *ngIf="!data.linkImagens[0]; else showImagem"
           src="../../../assets/img/sem_foto.png "
@@ -35,6 +35,47 @@
             </p>
           </section>
         </mat-card-content>
+      </mat-card> -->
+      <mat-card *ngFor="let data of ofertas">
+        <div class="content-wrapper">
+          <img
+            *ngIf="data.linkImagens[0]; else elseBlock"
+            mat-card-image
+            src="{{ data.linkImagens[0] }}"
+            alt="Power Plant"
+          />
+          <ng-template #elseBlock>
+            <img
+              mat-card-image
+              src="../../../assets/img/sem_foto.png"
+              alt="Power Plant"
+            />
+          </ng-template>
+          <mat-card-content>
+            <div>
+              <a>
+                {{ data.modelo }}, {{ data.anoModelo }} | R$ {{ data.preco }}
+              </a>
+              <span
+                matSuffix
+                style="
+                  margin-top: -5px;
+                  color: #686262;
+                  font-size: 10px;
+                  display: flex;
+                "
+              >
+                <mat-icon style="color: red; font-size: 18px">
+                  location_on
+                </mat-icon>
+                À {{ parteInteiraDistancia(data.distanciaEmKM) }} KM
+              </span>
+            </div>
+            <div class="caracteristicas">
+              <p>{{ data.quilometragem }} mil km, {{ data.descricao }}</p>
+            </div>
+          </mat-card-content>
+        </div>
       </mat-card>
     </div>
   </div>
