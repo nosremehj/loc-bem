@@ -70,7 +70,9 @@ export class OffersComponent implements OnInit {
   }
 
   parteInteiraDistancia(value: number): number {
-    return Math.floor(value);
+    let result = Math.floor(value);
+    result = result < 1 ? 1 : result;
+    return result;
   }
 
   searchTerm() {
