@@ -18,7 +18,7 @@ export class ChatBotComponent {
   preferences: any = {}; // Inicializamos um objeto vazio para armazenar as respostas
   currentQuestionIndex: number = 0; // Índice da pergunta atual
   currentQuestion: any; // Pergunta atual
-  coordenadasUsuario = { latitude: -10.704446, longitude: -48.410793 }; // Coordenadas fixas para exemplo
+  coordenadasUsuario = { latitude: 0, longitude: 0 }; // Coordenadas fixas para exemplo
   numericValue: number | null = null;
   selectedOptions: string[] = [];
 
@@ -117,11 +117,15 @@ export class ChatBotComponent {
         this.selectedOptions = this.preferences[this.currentQuestion.key] || [];
       }
     } else {
-      const data = {
-        ...this.preferences,
-        coordenadasUsuario: this.coordenadasUsuario,
-      };
-      this.dialogRef.close(data);
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.coordenadasUsuario.latitude = position.coords.latitude;
+        this.coordenadasUsuario.longitude = position.coords.longitude;
+        const data = {
+          ...this.preferences,
+          coordenadasUsuario: this.coordenadasUsuario,
+        };
+        this.dialogRef.close(data);
+      });
     }
   }
 
