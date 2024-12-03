@@ -18,7 +18,7 @@ export class ChatBotComponent {
   preferences: any = {}; // Inicializamos um objeto vazio para armazenar as respostas
   currentQuestionIndex: number = 0; // Índice da pergunta atual
   currentQuestion: any; // Pergunta atual
-  coordenadasUsuario = { latitude: 0, longitude: 0 }; // Coordenadas fixas para exemplo
+  coordenadasUsuario = { latitude: -10.704446, longitude: -48.410793 }; // Coordenadas fixas, é apenas adicionar aqui
   numericValue: number | null = null;
   selectedOptions: string[] = [];
 
@@ -96,20 +96,28 @@ export class ChatBotComponent {
     },
   ];
 
+  //caso queira que fique buscando a coordenada automaticamente é só descomentar o metodo abaixo e comentar o metodo seguinte
+
   // askNextQuestion() {
-  //   // Verifica se ainda há perguntas a serem feitas
   //   if (this.currentQuestionIndex < this.questions.length) {
   //     this.currentQuestion = this.questions[this.currentQuestionIndex];
+  //     if (this.currentQuestion.type === 'enum') {
+  //       this.selectedOptions = this.preferences[this.currentQuestion.key] || [];
+  //     }
   //   } else {
-  //     // Finaliza e exibe os dados finais
-  //     const data = {
-  //       ...this.preferences,
-  //       coordenadasUsuario: this.coordenadasUsuario,
-  //     };
-  //     this.dialogRef.close(data);
+  //     navigator.geolocation.getCurrentPosition((position) => {
+  //       this.coordenadasUsuario.latitude = position.coords.latitude;
+  //       this.coordenadasUsuario.longitude = position.coords.longitude;
+  //       const data = {
+  //         ...this.preferences,
+  //         coordenadasUsuario: this.coordenadasUsuario,
+  //       };
+  //       this.dialogRef.close(data);
+  //     });
   //   }
   // }
 
+  //comente esse metodo para deixar automatico novamente e descomente o metodo que está acima
   askNextQuestion() {
     if (this.currentQuestionIndex < this.questions.length) {
       this.currentQuestion = this.questions[this.currentQuestionIndex];
@@ -117,15 +125,11 @@ export class ChatBotComponent {
         this.selectedOptions = this.preferences[this.currentQuestion.key] || [];
       }
     } else {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.coordenadasUsuario.latitude = position.coords.latitude;
-        this.coordenadasUsuario.longitude = position.coords.longitude;
-        const data = {
-          ...this.preferences,
-          coordenadasUsuario: this.coordenadasUsuario,
-        };
-        this.dialogRef.close(data);
-      });
+      const data = {
+        ...this.preferences,
+        coordenadasUsuario: this.coordenadasUsuario,
+      };
+      this.dialogRef.close(data);
     }
   }
 
