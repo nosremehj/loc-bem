@@ -18,6 +18,8 @@ export class OffersComponent implements OnInit {
   filtroAtivo: boolean = false;
   load: boolean = true;
   respostaChatBot: any;
+  encontrado: boolean = true;
+  value: number = 0;
 
   constructor(
     private service: OffersService,
@@ -54,10 +56,23 @@ export class OffersComponent implements OnInit {
         this.respostaChatBot = result;
         this.service.getOffer(result).subscribe(
           (response) => {
-            this.toastr.success('Listagem concluída com sucesso!', 'Chat Bot');
-            this.ofertas = response.content;
-            this.spinner.hide();
-            this.load = false;
+            if (response.content?.length) {
+              this.toastr.success(
+                'Listagem concluída com sucesso!',
+                'Chat Bot'
+              );
+              this.ofertas = response.content;
+              this.spinner.hide();
+              this.load = false;
+              this.encontrado = true;
+              this.value = 0;
+            } else {
+              this.encontrado = false;
+              this.value = 1;
+              this.spinner.hide();
+              this.filtroAtivo = true;
+              this.load = false;
+            }
           },
           (error) => {
             this.spinner.hide();
@@ -83,10 +98,20 @@ export class OffersComponent implements OnInit {
     if (this.respostaChatBot) {
       this.service.getOffer(this.respostaChatBot, this.term).subscribe(
         (response) => {
-          this.toastr.success('Filtro realizado com sucesso!', 'Filtro');
-          this.ofertas = response.content;
-          this.spinner.hide();
-          this.load = false;
+          if (response.content?.length) {
+            this.toastr.success('Filtro realizado com sucesso!', 'Filtro');
+            this.ofertas = response.content;
+            this.spinner.hide();
+            this.load = false;
+            this.encontrado = true;
+            this.filtroAtivo = true;
+            this.value = 0;
+          } else {
+            this.encontrado = false;
+            this.value = 2;
+            this.spinner.hide();
+            this.load = false;
+          }
         },
         (error) => {
           this.spinner.hide();
@@ -102,11 +127,20 @@ export class OffersComponent implements OnInit {
         .pegarTodasAsOfertas(data.coordenadasUsuario, this.term)
         .subscribe(
           (res) => {
-            this.toastr.success('Filtro realizado com sucesso!', 'Filtro');
-            this.ofertas = res.content;
-            this.filtroAtivo = true;
-            this.spinner.hide();
-            this.load = false;
+            if (res.content?.length) {
+              this.toastr.success('Filtro realizado com sucesso!', 'Filtro');
+              this.ofertas = res.content;
+              this.filtroAtivo = true;
+              this.spinner.hide();
+              this.load = false;
+              this.encontrado = true;
+              this.value = 0;
+            } else {
+              this.encontrado = false;
+              this.value = 2;
+              this.spinner.hide();
+              this.load = false;
+            }
           },
           (error) => {
             this.spinner.hide();
@@ -130,6 +164,8 @@ export class OffersComponent implements OnInit {
         this.ofertas = res.content;
         this.spinner.hide();
         this.load = false;
+        this.encontrado = true;
+        this.value = 0;
       },
       (error) => {
         this.spinner.hide();

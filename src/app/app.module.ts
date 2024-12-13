@@ -26,6 +26,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { DetailsComponent } from './components/offers/details-offers/details/details.component';
 import { CarouselModule } from './components/shared/carousel/carousel.module';
+import { NotFoundComponent } from './components/shared/offer-not-found/not-found/not-found.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +40,7 @@ import { CarouselModule } from './components/shared/carousel/carousel.module';
     CreateLoginComponent,
     ChatBotComponent,
     DetailsComponent,
+    NotFoundComponent,
   ],
   imports: [
     CommonModule,

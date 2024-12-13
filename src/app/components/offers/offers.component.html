@@ -11,7 +11,7 @@
         Limpar Filtro
       </button>
     </section>
-    <div class="mt-cards">
+    <div class="mt-cards" *ngIf="encontrado; else naoEncontrado">
       <mat-card *ngFor="let data of ofertas" routerLink="details/{{ data.id }}">
         <div class="content-wrapper">
           <img
@@ -54,5 +54,10 @@
         </div>
       </mat-card>
     </div>
+    <ng-template #naoEncontrado>
+      <div class="mt-cards">
+        <app-not-found [number]="value"></app-not-found>
+      </div>
+    </ng-template>
   </div>
 </div>
