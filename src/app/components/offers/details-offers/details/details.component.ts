@@ -33,10 +33,11 @@ export class DetailsComponent implements OnInit {
     userId: '',
   };
   geoLocation: any = {
-    city: '',
+    town: '',
     region: '',
     state: '',
     state_code: '',
+    postcode: '',
   };
 
   user: any = {
@@ -67,22 +68,22 @@ export class DetailsComponent implements OnInit {
     navigator.geolocation.getCurrentPosition((position) => {
       this.coordenadas.latitude = position.coords.latitude;
       this.coordenadas.longitude = position.coords.longitude;
-      this.service.getLocation(this.coordenadas).subscribe((resposta) => {
-        this.geoLocation = resposta.results[0].components;
-        this.service
-          .getOneOffer(this.offer.id, this.coordenadas)
-          .subscribe((resposta) => {
-            this.offer = resposta;
-            this.userService
-              .findById(this.offer.userId)
-              .subscribe((resposta) => {
-                this.user = resposta;
-                this.spinner.hide();
-                this.toastr.success('Carregado com sucesso!');
-                this.load = false;
-              });
+      this.service
+        .getOneOffer(this.offer.id, this.coordenadas)
+        .subscribe((resposta) => {
+          this.coordenadas.latitude = resposta.latitude;
+          this.coordenadas.longitude = resposta.longitude;
+          this.service.getLocation(this.coordenadas).subscribe((resposta) => {
+            this.geoLocation = resposta.results[0].components;
           });
-      });
+          this.offer = resposta;
+          this.userService.findById(this.offer.userId).subscribe((resposta) => {
+            this.user = resposta;
+            this.spinner.hide();
+            this.toastr.success('Carregado com sucesso!');
+            this.load = false;
+          });
+        });
     });
   }
 

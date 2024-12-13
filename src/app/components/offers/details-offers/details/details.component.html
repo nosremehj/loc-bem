@@ -81,15 +81,13 @@
           <span class="info"
             >{{ parteInteiraDistancia(this.offer.distanciaEmKM) }} km</span
           >
-        </span>
-        <hr class="hr" />
-        <span
-          >Localização
-          <span class="info"
-            >{{ this.geoLocation.region }}, {{ this.geoLocation.city }},
-            {{ this.geoLocation.state_code }}</span
+          <span class="loc"
+            >{{ this.geoLocation.region }}, {{ this.geoLocation.town }},
+            {{ this.geoLocation.state_code }},
+            {{ this.geoLocation.postcode }}</span
           >
         </span>
+
         <hr class="hr" />
         <h3>Contato</h3>
         <span
