@@ -8,11 +8,25 @@ import { Observable } from 'rxjs';
 })
 export class OffersService {
   private apiUrl = 'http://localhost:8080/oferta';
-  private apiUrl1 = 'http://localhost:8080/oferta/list-as-post';
   constructor(private http: HttpClient) {}
 
-  getOffer(offerGet: any): Observable<any> {
-    return this.http.post(this.apiUrl1, offerGet);
+  getOffer(offerGet: any, searchTerm?: string): Observable<any> {
+    if (searchTerm) {
+      return this.http.post(
+        `${API_CONFIG.baseUrl}/oferta/list-as-post?searchTerm=${searchTerm}`,
+        offerGet
+      );
+    } else {
+      return this.http.post(
+        `${API_CONFIG.baseUrl}/oferta/list-as-post`,
+        offerGet
+      );
+    }
+  }
+  getOneOffer(id: number, coordenadas: any): Observable<any> {
+    return this.http.get<any>(
+      `${API_CONFIG.baseUrl}/oferta/${id}?latitude=${coordenadas.latitude}&longitude=${coordenadas.longitude}`
+    );
   }
 
   pegarTodasAsOfertas(offerGet: any, searchTerm?: string): Observable<any> {
@@ -26,25 +40,6 @@ export class OffersService {
       );
     }
   }
-
-  createOffer(offerData: {
-    modelo: string;
-    anoFabricação: number;
-    anoModelo: number;
-    preco: number;
-    descricao: string;
-    quiolometragem: number;
-    condicao: string;
-    coordenadas: string;
-    imagens: [string];
-    tipoVeiculo: string;
-    combustivel: string;
-    estadoVeiculo: string;
-    caracteristicas: [string];
-  }): Observable<any> {
-    return this.http.post<any>(API_CONFIG.baseUrl + `/oferta`, offerData);
-  }
-
   addVeiculo(veiculo: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, veiculo);
   }

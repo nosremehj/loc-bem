@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content" *ngIf="!this.load">
   <div class="chat">
     <p>Responda o chat e tenha acesso as melhores ofertas para você</p>
     <button (click)="startChat1()">Iniciar Chat</button>
@@ -12,31 +12,7 @@
       </button>
     </section>
     <div class="mt-cards">
-      <!-- <mat-card class="cards" *ngFor="let data of ofertas">
-        <img
-          *ngIf="!data.linkImagens[0]; else showImagem"
-          src="../../../assets/img/sem_foto.png "
-          alt="sem imagem"
-          style="border-radius: 80px"
-        />
-        <ng-template #showImagem>
-          <img mat-card-image src="{{ data.linkImagens[0] }}" />
-        </ng-template>
-        <mat-card-content>
-          <h3>
-            {{ data.modelo }}, {{ data.anoModelo }} |
-            <span>R$ {{ data.preco }}</span>
-          </h3>
-          <section>
-            <p>{{ data.quilometragem }} mil km, {{ data.descricao }}</p>
-            <p class="km">
-              <span class="material-symbols-outlined"> location_on </span>
-              {{ parteInteiraDistancia(data.distanciaEmKM) }} KM
-            </p>
-          </section>
-        </mat-card-content>
-      </mat-card> -->
-      <mat-card *ngFor="let data of ofertas">
+      <mat-card *ngFor="let data of ofertas" routerLink="details/{{ data.id }}">
         <div class="content-wrapper">
           <img
             *ngIf="data.linkImagens[0]; else elseBlock"
@@ -53,7 +29,7 @@
           </ng-template>
           <mat-card-content>
             <div>
-              <a>
+              <a routerLink="details/{{ data.id }}">
                 {{ data.modelo }}, {{ data.anoModelo }} | R$ {{ data.preco }}
               </a>
               <span

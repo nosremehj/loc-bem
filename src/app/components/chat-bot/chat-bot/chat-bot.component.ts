@@ -6,7 +6,6 @@ import {
   TipoVeiculo,
 } from '../../offers/models/preferencia-usuario';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ChatbotService } from '../../offers/chatbot/chatbot.service';
 
 @Component({
   selector: 'app-chat-bot',
@@ -21,6 +20,7 @@ export class ChatBotComponent {
   coordenadasUsuario = { latitude: -10.704446, longitude: -48.410793 }; // Coordenadas fixas, é apenas adicionar aqui
   numericValue: number | null = null;
   selectedOptions: string[] = [];
+  numericError: string | null = null;
 
   constructor(
     public dialogRef: MatDialogRef<ChatBotComponent>,
@@ -96,7 +96,7 @@ export class ChatBotComponent {
     },
   ];
 
-  //caso queira que fique buscando a coordenada automaticamente é só descomentar o metodo abaixo e comentar o metodo seguinte
+  // caso queira que fique buscando a coordenada automaticamente é só descomentar o metodo abaixo e comentar o metodo seguinte
 
   // askNextQuestion() {
   //   if (this.currentQuestionIndex < this.questions.length) {
@@ -112,12 +112,13 @@ export class ChatBotComponent {
   //         ...this.preferences,
   //         coordenadasUsuario: this.coordenadasUsuario,
   //       };
+  //       console.log(data);
   //       this.dialogRef.close(data);
   //     });
   //   }
   // }
 
-  //comente esse metodo para deixar automatico novamente e descomente o metodo que está acima
+  // comente esse metodo para deixar automatico novamente e descomente o metodo que está acima
   askNextQuestion() {
     if (this.currentQuestionIndex < this.questions.length) {
       this.currentQuestion = this.questions[this.currentQuestionIndex];
@@ -151,16 +152,19 @@ export class ChatBotComponent {
       .join(' ');
   }
 
-  // onAnswer(answer: any) {
+  // onAnswer() {
   //   const current = this.currentQuestion;
 
   //   if (current.type === 'numeric') {
-  //     this.preferences[current.key] = parseInt(answer, 10);
+  //     this.preferences[current.key] = this.numericValue;
   //   } else if (current.type === 'enum') {
-  //     this.preferences[current.key] = Array.isArray(answer) ? answer : [answer];
+  //     this.preferences[current.key] = this.selectedOptions.map((opt) =>
+  //       opt.toUpperCase()
+  //     ); // Envia em caixa alta
   //   }
 
   //   this.currentQuestionIndex++;
+  //   this.numericValue = null; // Limpa o valor numérico para a próxima pergunta
   //   this.askNextQuestion();
   // }
 
@@ -173,6 +177,21 @@ export class ChatBotComponent {
       this.preferences[current.key] = this.selectedOptions.map((opt) =>
         opt.toUpperCase()
       ); // Envia em caixa alta
+
+      // Verifica se o estado do veículo é "NOVO"
+      if (
+        current.key === 'estadoVeiculo' &&
+        this.selectedOptions.includes('NOVO')
+      ) {
+        // Define valores automáticos para as perguntas a serem puladas
+        this.preferences['pesoEstadoVeiculo'] = 10;
+        this.preferences['pesoQuilometragem'] = 10;
+
+        // Remove as perguntas a serem puladas da lista
+        this.questions = this.questions.filter(
+          (q) => q.key !== 'pesoEstadoVeiculo' && q.key !== 'pesoQuilometragem'
+        );
+      }
     }
 
     this.currentQuestionIndex++;
@@ -180,20 +199,50 @@ export class ChatBotComponent {
     this.askNextQuestion();
   }
 
-  // finishQuestionnaire() {
-  //   this.dialogRef.close(this.preferences); // Envia os dados para o componente pai
-  // }
-
-  // closeDialog() {
-  //   this.dialogRef.close(null); // Fecha sem salvar
-  // }
-
   closeDialog() {
-    // Caso o usuário queira cancelar, retorna null
     this.dialogRef.close(null);
   }
 
   isLastQuestion(): boolean {
     return this.currentQuestionIndex === this.questions.length - 1;
+  }
+
+  getPlaceholder(): string {
+    if (this.currentQuestion.key === 'distanciaMaxima') {
+      return 'Digite a distância máxima (em km)';
+    }
+    return 'Digite um número entre 1 e 10';
+  }
+
+  getMinValue(): number {
+    if (this.currentQuestion.key === 'distanciaMaxima') {
+      return 1; // Valor mínimo para distância
+    }
+    return 1; // Valor mínimo para as perguntas de 1 a 10
+  }
+
+  getMaxValue(): number {
+    if (this.currentQuestion.key === 'distanciaMaxima') {
+      return 1500; // Sem restrições máximas específicas
+    }
+    return 10; // Valor máximo para as perguntas de 1 a 10
+  }
+
+  validateNumericValue() {
+    if (this.numericValue === null) {
+      this.numericError = null;
+      return;
+    }
+
+    const minValue = this.getMinValue();
+    const maxValue = this.getMaxValue();
+
+    if (this.numericValue < minValue) {
+      this.numericError = `O valor mínimo permitido é ${minValue}.`;
+    } else if (this.numericValue > maxValue) {
+      this.numericError = `O valor máximo permitido é ${maxValue}.`;
+    } else {
+      this.numericError = null;
+    }
   }
 }

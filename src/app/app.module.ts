@@ -24,6 +24,8 @@ import { ChatBotComponent } from './components/chat-bot/chat-bot/chat-bot.compon
 import { MatDialogModule } from '@angular/material/dialog';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { DetailsComponent } from './components/offers/details-offers/details/details.component';
+import { CarouselModule } from './components/shared/carousel/carousel.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +38,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     CreateOfferComponent,
     CreateLoginComponent,
     ChatBotComponent,
+    DetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -57,6 +60,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
       progressBar: true,
     }),
     NgxSpinnerModule,
+    CarouselModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

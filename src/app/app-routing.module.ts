@@ -9,6 +9,7 @@ import { OffersComponent } from './components/offers/offers.component';
 import { CreateOfferComponent } from './components/offers/create-offer/create-offer.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CreateLoginComponent } from './components/auth/create-login/create-login.component';
+import { DetailsComponent } from './components/offers/details-offers/details/details.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
       {
         path: 'create-offer',
         component: CreateOfferComponent,
+      },
+      {
+        path: 'offers/details/:id',
+        component: DetailsComponent,
       },
     ],
   },

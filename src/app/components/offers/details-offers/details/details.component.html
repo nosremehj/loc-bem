@@ -1,0 +1,94 @@
+<div *ngIf="!this.load" class="container">
+  <!-- Título -->
+  <h2 class="text-center">Detalhes do Veículo</h2>
+
+  <!-- Carrossel de Imagens -->
+  <div>
+    <app-carousel
+      [imagens]="this.offer.linkImagens"
+      [autoSlide]="false"
+    ></app-carousel>
+  </div>
+  <div class="details-cars">
+    <div class="second-box">
+      <div class="sub-box-1">
+        <h3>Informações básicas</h3>
+        <span
+          >Modelo
+          <span class="info"> {{ this.offer.modelo }} </span>
+        </span>
+        <hr class="hr" />
+        <span
+          >Ano de Fabricação
+          <span class="info">{{ this.offer.anoFabricacao }} </span>
+        </span>
+        <hr class="hr" />
+        <span
+          >Ano do Modelo
+          <span class="info">{{ this.offer.anoModelo }} </span>
+        </span>
+        <hr class="hr" />
+        <span
+          >Preço
+          <span class="info">R$ {{ this.offer.preco }} </span>
+        </span>
+        <hr class="hr" />
+        <span
+          >Quilometragem
+          <span class="info">{{ this.offer.quilometragem }} km </span>
+        </span>
+        <hr class="hr" />
+      </div>
+      <div class="sub-box-2">
+        <span
+          >Tipo de Veículo
+          <span class="info"
+            >{{ capitalizeWords(this.offer.tipoVeiculo) }}
+          </span>
+        </span>
+        <hr class="hr" />
+        <span
+          >Combustível
+          <span class="info"
+            >{{ capitalizeWords(this.offer.combustivel) }}
+          </span>
+        </span>
+        <hr class="hr" />
+        <span
+          >Estado
+          <span class="info"
+            >{{ capitalizeWords(this.offer.estadoVeiculo) }}
+          </span>
+        </span>
+        <hr class="hr" />
+        <span
+          >Descrição
+          <span class="info">{{ this.offer.descricao }}</span>
+        </span>
+        <hr class="hr" />
+        <span
+          >Característica
+          <span class="info"
+            >{{ capitalizeEnumList(this.offer.caracteristica) }}
+          </span>
+        </span>
+        <hr class="hr" />
+      </div>
+      <div class="sub-box-3">
+        <h3>Localização</h3>
+        <span
+          >Distância do Usuário
+          <span class="info"
+            >{{ parteInteiraDistancia(this.offer.distanciaEmKM) }} km</span
+          >
+        </span>
+        <hr class="hr" />
+        <span
+          >Coordenadas
+          <span class="info">Latitude: -10.184358, Longitude: -48.333121</span>
+        </span>
+        <hr class="hr" />
+      </div>
+    </div>
+  </div>
+</div>

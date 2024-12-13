@@ -3,13 +3,6 @@
   display: flex;
   height: calc(100vh - 104px);
 
-  @media (min-width: 1920px) {
-    height: calc(100vh - 104px);
-  }
-
-  @media (max-width: 1280px) {
-    height: auto;
-  }
   .chat {
     width: 20%;
     margin-top: 40px;
@@ -77,55 +70,6 @@
       flex-wrap: wrap;
       gap: 10px;
       padding-left: 25px;
-
-      // .cards {
-      //   @media (min-width: 1920px) {
-      //     max-width: 17%;
-      //   }
-      //   max-width: 28%;
-      //   border: 3px solid #cccccc;
-      //   border-radius: 30px;
-      //   margin: 0px auto 30px auto;
-      //   img {
-      //     @media (min-width: 1280px) {
-      //       height: 80%;
-      //     }
-      //   }
-      //   mat-card-content {
-      //     padding-bottom: 0px;
-      //     h3 {
-      //       width: 100%;
-      //       font-weight: 700;
-      //       font-size: 12px;
-      //       line-height: 14.52px;
-      //       margin: 8px 0px 0px 0px;
-      //       color: #000000;
-      //     }
-      //     section {
-      //       display: flex;
-      //       p {
-      //         font-size: 10px;
-      //         font-weight: 700;
-      //         line-height: 12px;
-      //         color: #686262;
-      //       }
-      //     }
-      //     p {
-      //       margin: 8px 0px;
-      //     }
-      //     .km {
-      //       width: 40%;
-      //       font-size: 10px;
-      //       color: #686262;
-      //       font-weight: 700;
-      //       display: flex;
-      //       span {
-      //         color: #d30808;
-      //         font-size: 16px;
-      //       }
-      //     }
-      //   }
-      // }
 
       mat-card:hover {
         cursor: pointer;

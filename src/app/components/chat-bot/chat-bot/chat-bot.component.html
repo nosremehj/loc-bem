@@ -18,13 +18,18 @@
     <input
       matInput
       type="number"
-      placeholder="Digite um número entre 1 e 10"
+      [placeholder]="getPlaceholder()"
       [(ngModel)]="numericValue"
-      [min]="1"
-      [max]="200"
+      [min]="getMinValue()"
+      [max]="getMaxValue()"
+      (blur)="validateNumericValue()"
     />
+    <div *ngIf="numericError" class="error-message">
+      {{ numericError }}
+    </div>
   </div>
 </div>
+
 <!-- Botões de navegação -->
 <div class="navigation-buttons">
   <button class="cancel" (click)="closeDialog()">Cancelar</button>
@@ -35,7 +40,7 @@
     (click)="onAnswer()"
     [disabled]="
       (currentQuestion.type === 'numeric' &&
-        (numericValue === null || numericValue < 1 || numericValue > 200)) ||
+        (numericValue === null || numericError !== null)) ||
       (currentQuestion.type === 'enum' && selectedOptions.length === 0)
     "
   >

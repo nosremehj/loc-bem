@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OffersService } from './service/offers.service';
 import { PreferenciaUsuario } from './models/preferencia-usuario';
-import { ChatbotService } from './chatbot/chatbot.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ChatBotComponent } from '../chat-bot/chat-bot/chat-bot.component';
 import { ToastrService } from 'ngx-toastr';
@@ -17,6 +16,8 @@ export class OffersComponent implements OnInit {
   ofertas: any | null = null;
   term: string = '';
   filtroAtivo: boolean = false;
+  load: boolean = true;
+  respostaChatBot: any;
 
   constructor(
     private service: OffersService,
@@ -33,6 +34,7 @@ export class OffersComponent implements OnInit {
         this.toastr.success('Listagem concluída com sucesso!');
         this.ofertas = res.content;
         this.spinner.hide();
+        this.load = false;
       });
   }
 
@@ -49,12 +51,13 @@ export class OffersComponent implements OnInit {
           'Chat Bot'
         );
         this.spinner.show();
-
+        this.respostaChatBot = result;
         this.service.getOffer(result).subscribe(
           (response) => {
             this.toastr.success('Listagem concluída com sucesso!', 'Chat Bot');
             this.ofertas = response.content;
             this.spinner.hide();
+            this.load = false;
           },
           (error) => {
             this.spinner.hide();
@@ -77,15 +80,13 @@ export class OffersComponent implements OnInit {
 
   searchTerm() {
     this.spinner.show();
-
-    this.service
-      .pegarTodasAsOfertas(data.coordenadasUsuario, this.term)
-      .subscribe(
-        (res) => {
+    if (this.respostaChatBot) {
+      this.service.getOffer(this.respostaChatBot, this.term).subscribe(
+        (response) => {
           this.toastr.success('Filtro realizado com sucesso!', 'Filtro');
-          this.ofertas = res.content;
-          this.filtroAtivo = true;
+          this.ofertas = response.content;
           this.spinner.hide();
+          this.load = false;
         },
         (error) => {
           this.spinner.hide();
@@ -96,6 +97,27 @@ export class OffersComponent implements OnInit {
           console.error('Erro ao buscar ofertas:', error);
         }
       );
+    } else {
+      this.service
+        .pegarTodasAsOfertas(data.coordenadasUsuario, this.term)
+        .subscribe(
+          (res) => {
+            this.toastr.success('Filtro realizado com sucesso!', 'Filtro');
+            this.ofertas = res.content;
+            this.filtroAtivo = true;
+            this.spinner.hide();
+            this.load = false;
+          },
+          (error) => {
+            this.spinner.hide();
+            this.toastr.error(
+              'Ops... Não foi possível concluir essa ação.',
+              'Filtro'
+            );
+            console.error('Erro ao buscar ofertas:', error);
+          }
+        );
+    }
   }
 
   limparFiltro() {
@@ -107,6 +129,7 @@ export class OffersComponent implements OnInit {
         this.toastr.success('Filtro limpo!', 'Filtro');
         this.ofertas = res.content;
         this.spinner.hide();
+        this.load = false;
       },
       (error) => {
         this.spinner.hide();
