@@ -20,4 +20,8 @@ export class UserService {
   }): Observable<any> {
     return this.http.post<any>(API_CONFIG.baseUrl + `/users`, personData);
   }
+
+  findById(id: number): Observable<any> {
+    return this.http.get<any>(`${API_CONFIG.baseUrl}/users/${id}`);
+  }
 }

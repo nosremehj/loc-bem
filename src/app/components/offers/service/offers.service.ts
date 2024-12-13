@@ -43,4 +43,13 @@ export class OffersService {
   addVeiculo(veiculo: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, veiculo);
   }
+
+  private urlGeo = 'https://api.opencagedata.com/geocode/v1/json?';
+  private key = '3322af35cc0e4b799412cb0b513ffe09';
+
+  getLocation(coordenadas: any): Observable<any> {
+    return this.http.get<any>(
+      `${this.urlGeo}key=${this.key}&q=${coordenadas.latitude}%2C${coordenadas.longitude}`
+    );
+  }
 }

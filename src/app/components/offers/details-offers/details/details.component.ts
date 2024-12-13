@@ -3,6 +3,7 @@ import { OffersService } from '../../service/offers.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { UserService } from 'src/app/components/auth/create-login/services/user.service';
 
 @Component({
   selector: 'app-details',
@@ -29,6 +30,18 @@ export class DetailsComponent implements OnInit {
       latitude: '',
       longitude: '',
     },
+    userId: '',
+  };
+  geoLocation: any = {
+    city: '',
+    region: '',
+    state: '',
+    state_code: '',
+  };
+
+  user: any = {
+    name: '',
+    email: '',
   };
 
   coordenadas: any = {
@@ -46,21 +59,30 @@ export class DetailsComponent implements OnInit {
     private service: OffersService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private userService: UserService
   ) {}
 
   findById(): void {
     navigator.geolocation.getCurrentPosition((position) => {
       this.coordenadas.latitude = position.coords.latitude;
       this.coordenadas.longitude = position.coords.longitude;
-      this.service
-        .getOneOffer(this.offer.id, this.coordenadas)
-        .subscribe((resposta) => {
-          this.offer = resposta;
-          this.spinner.hide();
-          this.toastr.success('Carregado com sucesso!');
-          this.load = false;
-        });
+      this.service.getLocation(this.coordenadas).subscribe((resposta) => {
+        this.geoLocation = resposta.results[0].components;
+        this.service
+          .getOneOffer(this.offer.id, this.coordenadas)
+          .subscribe((resposta) => {
+            this.offer = resposta;
+            this.userService
+              .findById(this.offer.userId)
+              .subscribe((resposta) => {
+                this.user = resposta;
+                this.spinner.hide();
+                this.toastr.success('Carregado com sucesso!');
+                this.load = false;
+              });
+          });
+      });
     });
   }
 

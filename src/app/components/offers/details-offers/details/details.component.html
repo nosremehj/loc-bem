@@ -77,15 +77,29 @@
       <div class="sub-box-3">
         <h3>Localização</h3>
         <span
-          >Distância do Usuário
+          >Distância de você
           <span class="info"
             >{{ parteInteiraDistancia(this.offer.distanciaEmKM) }} km</span
           >
         </span>
         <hr class="hr" />
         <span
-          >Coordenadas
-          <span class="info">Latitude: -10.184358, Longitude: -48.333121</span>
+          >Localização
+          <span class="info"
+            >{{ this.geoLocation.region }}, {{ this.geoLocation.city }},
+            {{ this.geoLocation.state_code }}</span
+          >
+        </span>
+        <hr class="hr" />
+        <h3>Contato</h3>
+        <span
+          >Nome
+          <span class="info">{{ this.user.name }}</span>
+        </span>
+        <hr class="hr" />
+        <span
+          >Email
+          <span class="info">{{ this.user.email }} </span>
         </span>
         <hr class="hr" />
       </div>
