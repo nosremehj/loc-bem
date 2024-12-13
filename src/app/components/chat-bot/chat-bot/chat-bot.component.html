@@ -1,52 +1,54 @@
-<div class="chatbot" *ngIf="currentQuestion">
-  <h2>{{ currentQuestion.question }}</h2>
+<div class="content-chat">
+  <div class="chatbot" *ngIf="currentQuestion">
+    <h2>{{ currentQuestion.question }}</h2>
 
-  <!-- Pergunta do tipo enum -->
-  <div *ngIf="currentQuestion.type === 'enum'" class="options-container">
-    <button
-      *ngFor="let option of currentQuestion.options"
-      mat-raised-button
-      [ngClass]="{ selected: selectedOptions.includes(option) }"
-      (click)="toggleSelection(option)"
-    >
-      {{ capitalizeWords(option) }}
-    </button>
-  </div>
+    <!-- Pergunta do tipo enum -->
+    <div *ngIf="currentQuestion.type === 'enum'" class="options-container">
+      <button
+        *ngFor="let option of currentQuestion.options"
+        mat-raised-button
+        [ngClass]="{ selected: selectedOptions.includes(option) }"
+        (click)="toggleSelection(option)"
+      >
+        {{ capitalizeWords(option) }}
+      </button>
+    </div>
 
-  <!-- Pergunta numérica -->
-  <div *ngIf="currentQuestion.type === 'numeric'" class="numeric-container">
-    <input
-      matInput
-      type="number"
-      [placeholder]="getPlaceholder()"
-      [(ngModel)]="numericValue"
-      [min]="getMinValue()"
-      [max]="getMaxValue()"
-      (blur)="validateNumericValue()"
-    />
-    <div *ngIf="numericError" class="error-message">
-      {{ numericError }}
+    <!-- Pergunta numérica -->
+    <div *ngIf="currentQuestion.type === 'numeric'" class="numeric-container">
+      <input
+        matInput
+        type="number"
+        [placeholder]="getPlaceholder()"
+        [(ngModel)]="numericValue"
+        [min]="getMinValue()"
+        [max]="getMaxValue()"
+        (blur)="validateNumericValue()"
+      />
+      <div *ngIf="numericError" class="error-message">
+        {{ numericError }}
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Botões de navegação -->
-<div class="navigation-buttons">
-  <button class="cancel" (click)="closeDialog()">Cancelar</button>
+  <!-- Botões de navegação -->
+  <div class="navigation-buttons">
+    <button class="cancel" (click)="closeDialog()">Cancelar</button>
 
-  <button
-    class="send"
-    mat-raised-button
-    (click)="onAnswer()"
-    [disabled]="
-      (currentQuestion.type === 'numeric' &&
-        (numericValue === null || numericError !== null)) ||
-      (currentQuestion.type === 'enum' && selectedOptions.length === 0)
-    "
-  >
-    {{ currentQuestionIndex === questions.length - 1 ? "Finalizar" : "" }}
-    <mat-icon *ngIf="currentQuestionIndex !== questions.length - 1"
-      >send</mat-icon
+    <button
+      class="send"
+      mat-raised-button
+      (click)="onAnswer()"
+      [disabled]="
+        (currentQuestion.type === 'numeric' &&
+          (numericValue === null || numericError !== null)) ||
+        (currentQuestion.type === 'enum' && selectedOptions.length === 0)
+      "
     >
-  </button>
+      {{ currentQuestionIndex === questions.length - 1 ? "Finalizar" : "" }}
+      <mat-icon *ngIf="currentQuestionIndex !== questions.length - 1"
+        >send</mat-icon
+      >
+    </button>
+  </div>
 </div>

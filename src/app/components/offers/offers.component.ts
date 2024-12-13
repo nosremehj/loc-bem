@@ -42,7 +42,7 @@ export class OffersComponent implements OnInit {
 
   startChat1() {
     const dialogRef = this.dialog.open(ChatBotComponent, {
-      width: '500px',
+      width: '800px',
       data: {},
     });
 
