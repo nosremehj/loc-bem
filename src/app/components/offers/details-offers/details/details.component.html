@@ -81,11 +81,25 @@
           <span class="info"
             >{{ parteInteiraDistancia(this.offer.distanciaEmKM) }} km</span
           >
-          <span class="loc"
-            >{{ this.geoLocation.region }}, {{ this.geoLocation.town }},
-            {{ this.geoLocation.state_code }},
-            {{ this.geoLocation.postcode }}</span
-          >
+          <span class="loc">
+            <span *ngIf="this.geoLocation.region">
+              {{ this.geoLocation.region }}</span
+            >
+            <span *ngIf="this.geoLocation.town; else showCity">
+              {{ this.geoLocation.town }}
+            </span>
+            <ng-template #showCity>
+              <span *ngIf="this.geoLocation.city">
+                {{ this.geoLocation.city }}
+              </span>
+            </ng-template>
+            <span *ngIf="this.geoLocation.state_code">
+              {{ this.geoLocation.state_code }}</span
+            >
+            <span *ngIf="this.geoLocation.postcode">
+              {{ this.geoLocation.postcode }}
+            </span>
+          </span>
         </span>
 
         <hr class="hr" />
