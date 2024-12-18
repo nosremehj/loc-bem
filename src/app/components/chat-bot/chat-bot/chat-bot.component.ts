@@ -98,27 +98,6 @@ export class ChatBotComponent {
 
   // caso queira que fique buscando a coordenada automaticamente é só descomentar o metodo abaixo e comentar o metodo seguinte
 
-  // askNextQuestion() {
-  //   if (this.currentQuestionIndex < this.questions.length) {
-  //     this.currentQuestion = this.questions[this.currentQuestionIndex];
-  //     if (this.currentQuestion.type === 'enum') {
-  //       this.selectedOptions = this.preferences[this.currentQuestion.key] || [];
-  //     }
-  //   } else {
-  //     navigator.geolocation.getCurrentPosition((position) => {
-  //       this.coordenadasUsuario.latitude = position.coords.latitude;
-  //       this.coordenadasUsuario.longitude = position.coords.longitude;
-  //       const data = {
-  //         ...this.preferences,
-  //         coordenadasUsuario: this.coordenadasUsuario,
-  //       };
-  //       console.log(data);
-  //       this.dialogRef.close(data);
-  //     });
-  //   }
-  // }
-
-  // comente esse metodo para deixar automatico novamente e descomente o metodo que está acima
   askNextQuestion() {
     if (this.currentQuestionIndex < this.questions.length) {
       this.currentQuestion = this.questions[this.currentQuestionIndex];
@@ -126,13 +105,34 @@ export class ChatBotComponent {
         this.selectedOptions = this.preferences[this.currentQuestion.key] || [];
       }
     } else {
-      const data = {
-        ...this.preferences,
-        coordenadasUsuario: this.coordenadasUsuario,
-      };
-      this.dialogRef.close(data);
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.coordenadasUsuario.latitude = position.coords.latitude;
+        this.coordenadasUsuario.longitude = position.coords.longitude;
+        const data = {
+          ...this.preferences,
+          coordenadasUsuario: this.coordenadasUsuario,
+        };
+        console.log(data);
+        this.dialogRef.close(data);
+      });
     }
   }
+
+  // comente esse metodo para deixar automatico novamente e descomente o metodo que está acima
+  // askNextQuestion() {
+  //   if (this.currentQuestionIndex < this.questions.length) {
+  //     this.currentQuestion = this.questions[this.currentQuestionIndex];
+  //     if (this.currentQuestion.type === 'enum') {
+  //       this.selectedOptions = this.preferences[this.currentQuestion.key] || [];
+  //     }
+  //   } else {
+  //     const data = {
+  //       ...this.preferences,
+  //       coordenadasUsuario: this.coordenadasUsuario,
+  //     };
+  //     this.dialogRef.close(data);
+  //   }
+  // }
 
   toggleSelection(option: string) {
     const index = this.selectedOptions.indexOf(option);

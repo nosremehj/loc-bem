@@ -30,14 +30,18 @@ export class OffersComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
-    this.service
-      .pegarTodasAsOfertas(data.coordenadasUsuario)
-      .subscribe((res) => {
-        this.toastr.success('Listagem concluída com sucesso!');
-        this.ofertas = res.content;
-        this.spinner.hide();
-        this.load = false;
-      });
+    navigator.geolocation.getCurrentPosition((position) => {
+      data.coordenadasUsuario.latitude = position.coords.latitude;
+      data.coordenadasUsuario.longitude = position.coords.longitude;
+      this.service
+        .pegarTodasAsOfertas(data.coordenadasUsuario)
+        .subscribe((res) => {
+          this.toastr.success('Listagem concluída com sucesso!');
+          this.ofertas = res.content;
+          this.spinner.hide();
+          this.load = false;
+        });
+    });
   }
 
   startChat1() {
@@ -123,34 +127,39 @@ export class OffersComponent implements OnInit {
         }
       );
     } else {
-      this.service
-        .pegarTodasAsOfertas(data.coordenadasUsuario, this.term)
-        .subscribe(
-          (res) => {
-            if (res.content?.length) {
-              this.toastr.success('Filtro realizado com sucesso!', 'Filtro');
-              this.ofertas = res.content;
-              this.filtroAtivo = true;
+      navigator.geolocation.getCurrentPosition((position) => {
+        data.coordenadasUsuario.latitude = position.coords.latitude;
+        data.coordenadasUsuario.longitude = position.coords.longitude;
+        this.service
+          .pegarTodasAsOfertas(data.coordenadasUsuario, this.term)
+          .subscribe(
+            (res) => {
+              if (res.content?.length) {
+                console.log(data.coordenadasUsuario);
+                this.toastr.success('Filtro realizado com sucesso!', 'Filtro');
+                this.ofertas = res.content;
+                this.filtroAtivo = true;
+                this.spinner.hide();
+                this.load = false;
+                this.encontrado = true;
+                this.value = 0;
+              } else {
+                this.encontrado = false;
+                this.value = 2;
+                this.spinner.hide();
+                this.load = false;
+              }
+            },
+            (error) => {
               this.spinner.hide();
-              this.load = false;
-              this.encontrado = true;
-              this.value = 0;
-            } else {
-              this.encontrado = false;
-              this.value = 2;
-              this.spinner.hide();
-              this.load = false;
+              this.toastr.error(
+                'Ops... Não foi possível concluir essa ação.',
+                'Filtro'
+              );
+              console.error('Erro ao buscar ofertas:', error);
             }
-          },
-          (error) => {
-            this.spinner.hide();
-            this.toastr.error(
-              'Ops... Não foi possível concluir essa ação.',
-              'Filtro'
-            );
-            console.error('Erro ao buscar ofertas:', error);
-          }
-        );
+          );
+      });
     }
   }
 
@@ -192,7 +201,7 @@ const data = {
   caracteristicas: ['AR_CONDICIONADO'],
   distanciaMaxima: 10,
   coordenadasUsuario: {
-    latitude: -10.704446,
-    longitude: -48.410793,
+    latitude: 0,
+    longitude: 0,
   },
 };
